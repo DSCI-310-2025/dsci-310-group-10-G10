@@ -8,7 +8,7 @@ WORKDIR /home/jovyan/work
 RUN git clone https://github.com/DSCI-310-2025/dsci-310-group-10-G10.git /home/jovyan/work/
 
 # Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install numpy pandas scikit-learn matplotlib seaborn jupyterlab notebook pip setuptools
 
 # Install R dependencies
 RUN R -e "install.packages(c('tidyverse', 'ggplot2', 'caret'), repos='http://cran.us.r-project.org')"
