@@ -2,3 +2,15 @@ touch requirements.txt
 git add requirements.txt
 git commit -m "Add empty requirements.txt"
 git push origin main
+
+numpy==1.24.3
+pandas==1.5.3
+scikit-learn==1.2.2
+matplotlib==3.7.1
+seaborn==0.12.2
+
+jupyterlab==3.6.3
+notebook==6.5.4
+
+pip==23.0.1
+setuptools==67.6.1
