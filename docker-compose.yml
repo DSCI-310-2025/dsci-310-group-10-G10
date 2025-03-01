@@ -1,9 +1,0 @@
-services:
-  airbnb-env:
-    image: group10/airbnb_prices
-    ports:
-      - "8787:8888"
-    volumes:
-      - ./notebook:/home/jovyan/work
-    environment:
-      - JUPYTER_TOKEN=easy
