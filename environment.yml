@@ -1,0 +1,10 @@
+name: base
+channels:
+  - conda-forge
+dependencies:
+  - r-ggplot2=3.4.3
+#  - r-dplyr=1.1.3
+#  - r-car=3.0-11
+ # - r-corrplot=0.92
+  #- r-tidyr=1.1.3
+ # - r-cowplot=1.1.1
