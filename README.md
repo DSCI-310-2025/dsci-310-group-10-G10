@@ -19,9 +19,9 @@ To run the coding part, follow these steps:
 
 1. Open terminal or command prompt, cloning GitHub code locally by: git clone https://github.com/DSCI-310-2025/dsci-310-group-10-G10.git
 and by: cd dsci-310-group-10-G10
-2. Execute the following commands to pull the latest Docker image from DockerHub: docker pull dscidyy/dsci310_project:latest
-3. Run the Docker container: docker run -p 8888:8888 dscidyy/dsci310_project
-4. After running the container, open your web browser and go to:http://localhost:8888 This will launch a Jupyter Notebook environment where you can access the project files and start working on the analysis.
+2. Set up the environment, if using conda, run: conda env create -f environment.yml
+conda activate dsci310_project
+3. Lunch Jypyter notebook: jupyter notebook
 
 
 ## List of dependencies needed to run analysis
