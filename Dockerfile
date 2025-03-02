@@ -7,12 +7,15 @@ WORKDIR /home/jovyan/work
 # Clone GitHub repository into Docker container
 RUN git clone https://github.com/DSCI-310-2025/dsci-310-group-10-G10.git /home/jovyan/work/
 
-# Install Python dependencies
-RUN pip install numpy pandas scikit-learn matplotlib seaborn jupyterlab notebook pip setuptools
+#Copy `environment.yml` and create Conda environment
+COPY environment.yml /home/jovyan/work/environment.yml
+RUN conda env create -f /home/jovyan/work/environment.yml && \
+    conda clean --all -y
 
-# Install R dependencies
-RUN R -e "install.packages(c('tidyverse', 'ggplot2', 'caret'), repos='http://cran.us.r-project.org')"
-
+# Setting the Conda Environment as Default
+ENV PATH /opt/conda/envs/r-environment/bin:$PATH
+RUN echo "conda activate r-environment" >> ~/.bashrc
+    
 # Run Jupyter Notebook
 CMD ["start-notebook.sh", "--NotebookApp.token=''","--NotebookApp.ip='0.0.0.0'"]
 
