@@ -1,4 +1,4 @@
-# Project Title
+# Analyzing Key Factors Affecting Airbnb Prices in Europe
 
 ## Contributors
 
@@ -17,7 +17,10 @@ The data we used was collected from <https://zenodo.org/records/4446043#.Y9Y9ENJ
 
 To run the analysis, follow these steps:
 
-1. Clone this repository
+1. Open terminal or command prompt and execute the following commands to pull the latest Docker image from DockerHub: docker pull dscidyy/dsci310_project:latest
+2. Run the Docker container: docker run -p 8888:8888 dscidyy/dsci310_project
+3. After running the container, open your web browser and go to:http://localhost:8888 This will launch a Jupyter Notebook environment where you can access the project files and start working on the analysis.
+
 
 ## List of dependencies needed to run analysis
 
