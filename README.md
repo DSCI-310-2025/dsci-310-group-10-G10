@@ -1,4 +1,4 @@
-# Project Title
+# Analyzing Key Factors Affecting Airbnb Prices in Europe
 
 ## Contributors
 
@@ -13,11 +13,21 @@ This project aims to investigate the factors that influence Airbnb pricing by an
 
 The data we used was collected from <https://zenodo.org/records/4446043#.Y9Y9ENJBwUE>.
 
-## How to Run the Analysis
+## How to Run this project
 
-To run the analysis, follow these steps:
+To run the coding part, follow these steps:
 
-1. Clone this repository
+1. Open terminal or command prompt, cloning GitHub code locally by: git clone https://github.com/DSCI-310-2025/dsci-310-group-10-G10.git
+2. Change location: cd dsci-310-group-10-G10
+3. Set up the environment, if using conda, run: conda env create -f environment.yml
+4. Activate conda: conda activate r-environment
+5. Lunch Jypyter Notebook: jupyter notebook
+
+Or Option 2: Run with Docker (Recommended)
+1. Pull the latest Docker image from DockerHub: docker pull dscidyy/dsci310_project:latest
+2. Run the Docker container: docker run -p 8888:8888 dscidyy/dsci310_project
+3. Open your web browser and navigate to: http://localhost:8888
+
 
 ## List of dependencies needed to run analysis
 

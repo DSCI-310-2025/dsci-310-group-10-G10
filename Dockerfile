@@ -18,5 +18,7 @@ RUN Rscript -e "remotes::install_version('ggplot2', version = '3.5.1', repos='ht
     Rscript -e "remotes::install_version('cowplot', version = '1.1.1', repos='http://cran.us.r-project.org')"
 
 # Run Jupyter Notebook
-CMD ["start-notebook.sh", "--NotebookApp.token=''","--NotebookApp.ip='0.0.0.0'"]
+CMD ["start-notebook.sh", "--NotebookApp.token=''", "--NotebookApp.ip='0.0.0.0'"]
+
+
 
