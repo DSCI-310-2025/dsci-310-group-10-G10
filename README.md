@@ -13,20 +13,28 @@ This project aims to investigate the factors that influence Airbnb pricing by an
 
 The data we used was collected from <https://zenodo.org/records/4446043#.Y9Y9ENJBwUE>.
 
-## How to Run this project
+## How to Run this Project using Docker
+### How Docker Image is Built Automatically
+- This project uses **GitHub Actions** to automatically build and push Docker images to DockerHub.
+- Whenever a change is pushed to the `Dockerfile` in the `main` branch, the following happens:
+  1. **GitHub Actions builds a new Docker image**
+  2. **The new image is pushed to DockerHub at:**  
+     👉 [DockerHub Repository](https://hub.docker.com/r/dscidyy/dsci310_project)
+### Manually Pull the Latest Image
+1. **Pull the latest Docker image**
+   ```sh
+   docker pull dscidyy/dsci310_project:latest
+2. **Run the container**
+   docker run -it --rm dscidyy/dsci310_project:latest
+3. **Inside the container, start an R session**
+   library(ggplot2)
+   library(dplyr)
+   library(car)
+   library(corrplot)
+   library(tidyverse)
+   library(cowplot)
 
-To run the coding part, follow these steps:
 
-1. Open terminal or command prompt, cloning GitHub code locally by: git clone https://github.com/DSCI-310-2025/dsci-310-group-10-G10.git
-2. Change location: cd dsci-310-group-10-G10
-3. Set up the environment, if using conda, run: conda env create -f environment.yml
-4. Activate conda: conda activate r-environment
-5. Lunch Jypyter Notebook: jupyter notebook
-
-Or Option 2: Run with Docker (Recommended)
-1. Pull the latest Docker image from DockerHub: docker pull dscidyy/dsci310_project:latest
-2. Run the Docker container: docker run -p 8888:8888 dscidyy/dsci310_project
-3. Open your web browser and navigate to: http://localhost:8888
 
 
 ## List of dependencies needed to run analysis
