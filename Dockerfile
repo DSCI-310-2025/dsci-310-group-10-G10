@@ -1,24 +1,16 @@
-# Use Jupyter Data Science Notebook as the base image
-FROM jupyter/datascience-notebook:latest
+# Uses Rocker Tidyverse as a base image, includes R 4.3.1 and Tidyverse related tools
+FROM rocker/tidyverse:4.3.1
 
-# Set working directory
-WORKDIR /home/jovyan/work
+# Setting up the working directory
+WORKDIR /home/rproject
 
-# Clone GitHub repository into Docker container
-RUN git clone https://github.com/DSCI-310-2025/dsci-310-group-10-G10.git /home/jovyan/work/
+# Copy local code (original git clone removed)
+COPY . /home/rproject/
 
-# Install Python dependencies
-RUN pip install numpy pandas scikit-learn matplotlib seaborn jupyterlab notebook pip setuptools
+# Install the R dependency in environment.yml
+RUN R -e "install.packages(c('ggplot2', 'dplyr', 'car', 'corrplot', 'tidyr', 'cowplot'), repos='https://cran.rstudio.com/')"
 
-# Install R dependencies
-RUN Rscript -e "remotes::install_version('ggplot2', version = '3.5.1', repos='http://cran.us.r-project.org')" && \
-    Rscript -e "remotes::install_version('dplyr', version = '1.1.4', repos='http://cran.us.r-project.org')" && \
-    Rscript -e "remotes::install_version('corrplot', version = '0.92', repos='http://cran.us.r-project.org')" && \
-    Rscript -e "remotes::install_version('tidyr', version = '1.2.1', repos='http://cran.us.r-project.org')" && \
-    Rscript -e "remotes::install_version('cowplot', version = '1.1.1', repos='http://cran.us.r-project.org')"
-
-# Run Jupyter Notebook
-CMD ["start-notebook.sh", "--NotebookApp.token=''", "--NotebookApp.ip='0.0.0.0'"]
-
+# Setting the default command when the container starts
+CMD ["R"]
 
 
