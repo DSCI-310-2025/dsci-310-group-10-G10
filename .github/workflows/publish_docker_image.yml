@@ -5,19 +5,13 @@ on:
     branches:
       - main
     paths:
-      - 'Dockerfile'
-      - '.github/workflows/publish_docker_image.yml'
-      - 'Dockerfile'
-      - '.github/workflows/publish_docker_image.yml'
-      - 'Milestone_1_Data_Analysis/**'   
-      - 'data/**'                        
-      - 'requirements.txt'
-      - 'environment.yml'
-
+      - "Dockerfile"
+      - ".github/workflows/publish_docker_image.yml"
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -36,5 +30,6 @@ jobs:
         with:
           context: .
           push: true
-          tags: dscidyy/dsci310_project:latest
+          tags: dscidyy/dsci310_project:latest, dscidyy/dsci310_project:${{ github.sha }}
+
 
