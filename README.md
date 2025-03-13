@@ -25,7 +25,8 @@ The data we used was collected from <https://zenodo.org/records/4446043#.Y9Y9ENJ
    ```sh
    docker pull dscidyy/dsci310_project:latest
 2. **Run the container**
-   docker run -it --rm dscidyy/dsci310_project:latest
+   ```sh
+   docker run --platform linux/amd64 -it --rm dscidyy/dsci310_project:latest
 3. **Inside the container, start an R session**
    library(ggplot2)
    library(dplyr)
