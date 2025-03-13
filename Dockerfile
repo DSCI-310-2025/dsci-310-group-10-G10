@@ -8,7 +8,12 @@ WORKDIR /home/rproject
 COPY . /home/rproject/
 
 # Install the R dependency in environment.yml
-RUN R -e "install.packages(c('ggplot2', 'dplyr', 'car', 'corrplot', 'tidyr', 'cowplot'), repos='https://cran.rstudio.com/')"
+RUN Rscript -e "remotes::install_version('ggplot2', version = '3.5.1', repos='http://cran.us.r-project.org')" && \
+    Rscript -e "remotes::install_version('dplyr', version = '1.1.4', repos='http://cran.us.r-project.org')" && \
+    Rscript -e "remotes::install_version('corrplot', version = '0.92', repos='http://cran.us.r-project.org')" && \
+    Rscript -e "remotes::install_version('tidyr', version = '1.2.1', repos='http://cran.us.r-project.org')" && \
+    Rscript -e "remotes::install_version('cowplot', version = '1.1.1', repos='http://cran.us.r-project.org')"
+
 
 # Setting the default command when the container starts
 CMD ["R"]
