@@ -1,0 +1,32 @@
+
+Call:
+lm(formula = realSum ~ person_capacity + bedrooms + dist + metro_dist + 
+    attr_index_norm + host_is_superhost + room_type + weekdays + 
+    city + rest_index_norm, data = airbnb)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-1075.2  -100.9   -24.6    48.8 16098.4 
+
+Coefficients:
+                       Estimate Std. Error t value Pr(>|t|)    
+(Intercept)           -157.0106    18.8065  -8.349  < 2e-16 ***
+person_capacity         48.2865     2.7917  17.296  < 2e-16 ***
+bedrooms               143.8682     5.1288  28.051  < 2e-16 ***
+dist                     9.7284     1.7658   5.509 3.65e-08 ***
+metro_dist             -19.5046     3.2934  -5.922 3.23e-09 ***
+attr_index_norm          8.8643     0.4067  21.793  < 2e-16 ***
+host_is_superhostTRUE   25.7817     6.9483   3.710 0.000207 ***
+room_typePrivate room -145.5926     6.2375 -23.341  < 2e-16 ***
+room_typeShared room  -249.2959    24.3281 -10.247  < 2e-16 ***
+weekdaysTRUE             2.3387     5.2230   0.448 0.654321    
+citylondon              75.5673    10.7059   7.058 1.74e-12 ***
+cityparis               86.6404     9.5240   9.097  < 2e-16 ***
+rest_index_norm          0.6169     0.3197   1.930 0.053657 .  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 352.4 on 19152 degrees of freedom
+Multiple R-squared:   0.24,	Adjusted R-squared:  0.2395 
+F-statistic: 503.9 on 12 and 19152 DF,  p-value: < 2.2e-16
+
