@@ -154,24 +154,26 @@ summary(airbnb[, c("realSum", "person_capacity", "bedrooms", "dist",
                    "metro_dist", "attr_index", "attr_index_norm", "rest_index", "rest_index_norm")])
 ```
 
-###Exploratory Data Analysis
+### Exploratory Data Analysis
 
 @fig-histograms displays the distribution of key predictor variables in the dataset. These histograms provide insight into how each variable is spread and whether they exhibit skewness. Most variables showing a right-skewed distribution, indicating a concentration of lower values with a few extreme outliers. The distributions of distance-based predictors (dist and metro_dist) suggest that most listings are located closer to central areas, with a gradual decline in frequency as distance increases.
 
 ![Distributions of predictor variables used in modeling Airbnb price.](../results/histograms.png){#fig-histograms width=70%}
 
-###Correlation Matrix of Numerical Variables
+### Correlation Matrix of Numerical Variables
 
 To examine potential relationships between numerical variables, we computed pairwise Pearson correlation coefficients and visualized them using a heatmap. Darker blue shades indicate strong positive correlations, while darker red shades denote strong negative correlations. We observe that realSum (our target variable) has positive correlations with person_capacity and bedrooms, implying that larger accommodations tend to have higher prices. Conversely, dist and metro_dist exhibit weak or slightly negative correlations with realSum, suggesting that properties farther from city centers may not necessarily be priced higher. 
 
 ![Correlation matrix of predictor variables and price, with color indicating the strength and direction of relationships.](../results/correlation_matrix.png){#fig-matrix width=70%}
 
-###Regression Analysis
+### Regression Analysis
 
 A multiple linear regression model was fitted to predict Airbnb prices using key listing attributes. @fig-summary summarizes the model coefficients, indicating the effect of each predictor on price.
+
 ![Linear regression results for Airbnb price as a function of listing characteristics.](../results/model_summary.txt){#fig-summary width=70%}
 
 @fig-residuals_plot shows the residuals of the model, which appear to be relatively evenly distributed around zero. However, some variance remains unexplained, suggesting that additional factors such as seasonal demand fluctuations or host pricing strategies could be influencing Airbnb prices.
+
 ![Residuals plot for the regression model, showing the distribution of errors around zero.](../results/residuals_plot.png){#fig-residuals_plot width=70%}
 
 

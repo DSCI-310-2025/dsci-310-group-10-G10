@@ -68,7 +68,12 @@ div.csl-indent {
   <ul>
   <li><a href="#summary" id="toc-summary" class="nav-link active" data-scroll-target="#summary"><span class="header-section-number">1</span> Summary</a></li>
   <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="header-section-number">2</span> Introduction</a></li>
-  <li><a href="#dataset-description" id="toc-dataset-description" class="nav-link" data-scroll-target="#dataset-description"><span class="header-section-number">3</span> Dataset Description</a></li>
+  <li><a href="#dataset-description" id="toc-dataset-description" class="nav-link" data-scroll-target="#dataset-description"><span class="header-section-number">3</span> Dataset Description</a>
+  <ul class="collapse">
+  <li><a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis" class="nav-link" data-scroll-target="#exploratory-data-analysis"><span class="header-section-number">3.1</span> Exploratory Data Analysis</a></li>
+  <li><a href="#correlation-matrix-of-numerical-variables" id="toc-correlation-matrix-of-numerical-variables" class="nav-link" data-scroll-target="#correlation-matrix-of-numerical-variables"><span class="header-section-number">3.2</span> Correlation Matrix of Numerical Variables</a></li>
+  <li><a href="#regression-analysis" id="toc-regression-analysis" class="nav-link" data-scroll-target="#regression-analysis"><span class="header-section-number">3.3</span> Regression Analysis</a></li>
+  </ul></li>
   <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion"><span class="header-section-number">4</span> Discussion</a></li>
   <li><a href="#key-findings" id="toc-key-findings" class="nav-link" data-scroll-target="#key-findings"><span class="header-section-number">5</span> Key Findings</a>
   <ul class="collapse">
@@ -487,6 +492,9 @@ Table&nbsp;3: Summary statistics of selected numeric variables.
 </div>
 </figure>
 </div>
+<section id="exploratory-data-analysis" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="exploratory-data-analysis"><span class="header-section-number">3.1</span> Exploratory Data Analysis</h3>
+<p><a href="#fig-histograms" class="quarto-xref">Figure&nbsp;1</a> displays the distribution of key predictor variables in the dataset. These histograms provide insight into how each variable is spread and whether they exhibit skewness. Most variables showing a right-skewed distribution, indicating a concentration of lower values with a few extreme outliers. The distributions of distance-based predictors (dist and metro_dist) suggest that most listings are located closer to central areas, with a gradual decline in frequency as distance increases.</p>
 <div id="fig-histograms" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-histograms-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -497,6 +505,10 @@ Figure&nbsp;1: Distributions of predictor variables used in modeling Airbnb pric
 </div>
 </figure>
 </div>
+</section>
+<section id="correlation-matrix-of-numerical-variables" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="correlation-matrix-of-numerical-variables"><span class="header-section-number">3.2</span> Correlation Matrix of Numerical Variables</h3>
+<p>To examine potential relationships between numerical variables, we computed pairwise Pearson correlation coefficients and visualized them using a heatmap. Darker blue shades indicate strong positive correlations, while darker red shades denote strong negative correlations. We observe that realSum (our target variable) has positive correlations with person_capacity and bedrooms, implying that larger accommodations tend to have higher prices. Conversely, dist and metro_dist exhibit weak or slightly negative correlations with realSum, suggesting that properties farther from city centers may not necessarily be priced higher.</p>
 <div id="fig-matrix" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-matrix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -507,6 +519,10 @@ Figure&nbsp;2: Correlation matrix of predictor variables and price, with color i
 </div>
 </figure>
 </div>
+</section>
+<section id="regression-analysis" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="regression-analysis"><span class="header-section-number">3.3</span> Regression Analysis</h3>
+<p>A multiple linear regression model was fitted to predict Airbnb prices using key listing attributes. <a href="#fig-summary" class="quarto-xref">Figure&nbsp;3</a> summarizes the model coefficients, indicating the effect of each predictor on price.</p>
 <div id="fig-summary" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-summary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -517,6 +533,7 @@ Figure&nbsp;3: Linear regression results for Airbnb price as a function of listi
 </div>
 </figure>
 </div>
+<p><a href="#fig-residuals_plot" class="quarto-xref">Figure&nbsp;4</a> shows the residuals of the model, which appear to be relatively evenly distributed around zero. However, some variance remains unexplained, suggesting that additional factors such as seasonal demand fluctuations or host pricing strategies could be influencing Airbnb prices.</p>
 <div id="fig-residuals_plot" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-residuals_plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -527,6 +544,7 @@ Figure&nbsp;4: Residuals plot for the regression model, showing the distribution
 </div>
 </figure>
 </div>
+</section>
 </section>
 <section id="discussion" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="discussion"><span class="header-section-number">4</span> Discussion</h2>
@@ -670,10 +688,10 @@ Guttentag, Daniel. 2013. <span>“Airbnb: Disruptive Innovation and the Rise of 
 Oskam, Jeroen, and Albert Boswijk. 2015. <span>“Airbnb: The Future of Networked Hospitality Businesses.”</span> <a href="https://www.researchgate.net/publication/298305479_Airbnb_The_future_of_networked_hospitality_businesses">https://www.researchgate.net/publication/298305479_Airbnb_The_future_of_networked_hospitality_businesses</a>.
 </div>
 <div id="ref-airbnb_price_determinants" class="csl-entry" role="listitem">
-Teubner, Timm, Florian Hawlitschek, and David Dann. 2017. <span>“Price Determinants on Airbnb: How Reputation Pays Off in the Sharing Economy.”</span> <em>ResearchGate</em>. <a href="https://www.researchgate.net/publication/315838775_Price_Determinants_on_Airbnb_How_Reputation_Pays_Off_in_the_Sharing_Economy">https://www.researchgate.net/publication/315838775_Price_Determinants_on_Airbnb_How_Reputation_Pays_Off_in_the_Sharing_Economy</a>.
+Teubner, Timm, Florian Hawlitschek, and David Dann. 2017. <span>“Price Determinants on Airbnb: How Reputation Pays Off in the Sharing Economy.”</span> <a href="https://www.researchgate.net/publication/315838775_Price_Determinants_on_Airbnb_How_Reputation_Pays_Off_in_the_Sharing_Economy">https://www.researchgate.net/publication/315838775_Price_Determinants_on_Airbnb_How_Reputation_Pays_Off_in_the_Sharing_Economy</a>.
 </div>
 <div id="ref-airbnb_analysis" class="csl-entry" role="listitem">
-Toader, Valentin, Adina Letiţia Negrușa, Oana Ruxandra Bode, and Rozalia Veronica Rus. 2020. <span>“Analysis of Price Determinants in the Case of Airbnb Listings.”</span> <em>Economic Research-Ekonomska Istraživanja</em> 34 (1): 1778–96. <a href="https://doi.org/10.1080/1331677X.2021.1962380">https://doi.org/10.1080/1331677X.2021.1962380</a>.
+Toader, Valentin, Adina Letiţia Negrușa, Oana Ruxandra Bode, and Rozalia Veronica Rus. 2020. <span>“Analysis of Price Determinants in the Case of Airbnb Listings.”</span> <a href="https://www.tandfonline.com/doi/full/10.1080/1331677X.2021.1962380">https://www.tandfonline.com/doi/full/10.1080/1331677X.2021.1962380</a>.
 </div>
 </div></section></div></main>
 <!-- /main column -->
