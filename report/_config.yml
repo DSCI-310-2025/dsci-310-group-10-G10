@@ -1,4 +1,10 @@
 title: "Airbnb Pricing Analysis Report"
-author: "G10"
+author: "Kevin Cheng, Yueyang Ding, Tiffany Gong, Chenguang Li"
+date: "2025-03-15"
+sphinx:
+  config:
+    bibtex_reference_style: author_year
 execute:
   execute_notebooks: force
+bibtex_bibfiles:
+    - references.bib
