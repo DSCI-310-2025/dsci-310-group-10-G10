@@ -1,5 +1,5 @@
 # Uses Rocker Tidyverse as a base image, includes R 4.3.1 and Tidyverse related tools
-FROM rocker/tidyverse:latest
+FROM rocker/tidyverse:4
 
 # Setting up the working directory
 WORKDIR /home/rproject
