@@ -1,0 +1,18 @@
+services:
+  rstudio:
+    image: dscidyy/dsci310_project:latest  
+    container_name: dsci310_rstudio
+    ports:
+      - "8888:8787"  
+    volumes:
+      - "./docs:/home/rstudio/docs"
+      - "./data:/home/rstudio/data"
+      - "./model:/home/rstudio/model"
+      - "./report:/home/rstudio/report"
+      - "./results:/home/rstudio/results"
+      - "./scripts:/home/rstudio/scripts"
+      - "./Makefile:/home/rstudio/Makefile"
+      - "./Milestone_1_Data_Analysis:/home/rstudio/Milestone_1_Data_Analysis"
+    environment:
+      DISABLE_AUTH: true  
+    working_dir: /home/rstudio
