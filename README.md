@@ -21,18 +21,19 @@ The data we used was collected from <https://zenodo.org/records/4446043#.Y9Y9ENJ
   2. **The new image is pushed to DockerHub at:**  
      👉 [DockerHub Repository](https://hub.docker.com/r/dscidyy/dsci310_project)
 ### Manually Pull the Latest Image
-1. **Pull the latest Docker image**
+1. **Clone repository**
    ```sh
-   docker pull dscidyy/dsci310_project:latest
-2. **Run the container**
+   git clone https://github.com/DSCI-310-2025/dsci-310-group-10-G10.git
+2. **cd into repo**
+3. **Run the services**
    ```sh
-   docker run --platform linux/amd64 -it --rm dscidyy/dsci310_project:latest
-3. **Inside the container, start an R session**
+   docker-compose up
+4. **Navigate to browser**
+  to http://localhost:8888/
+4. **Inside R**
    ```sh
-   system("make all")
-
-
-
+   system("make all") #to run analysis from start
+   system("make clean") #to delete what analysis generated
 
 ## List of dependencies needed to run analysis
 
