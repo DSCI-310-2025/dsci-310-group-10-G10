@@ -1,0 +1,327 @@
+---
+title: "Analyzing Key Factors Affecting Airbnb Prices Across Berlin, London, and Paris"
+author: "Kevin Cheng, Yueyang Ding, Tiffany Gong, Chenguang Li"
+output: 
+  html:
+    embed-resources: true
+toc: true
+number-sections: true
+fig-cap-location: top 
+bibliography: references.bib
+---
+
+
+## Summary
+
+This project aims to develop a predictive model to estimate Airbnb listing prices in Berlin, London, and Paris using key property 
+and location-based attributes. The dataset, sourced from a publicly available Airbnb repository, includes variables such as room 
+type, guest ratings, host status, distance to city center, and neighborhood attractiveness scores. To enhance model performance, 
+we apply exploratory data analysis (EDA), correlation analysis, and multiple linear regression to determine the most significant 
+predictors of price. Our findings align with previous research that highlights the influence of location, property characteristics, 
+and host reputation on pricing strategies in the short-term rental market. The evaluation of our model relies on R-squared to 
+measure explanatory power and Root Mean Squared Error (RMSE) to assess prediction accuracy. By identifying key pricing factors, 
+this study provides insights that can guide Airbnb hosts in optimizing their pricing strategies and travelers in making informed
+booking decisions.
+
+## Introduction
+
+The rapid expansion of peer-to-peer accommodation platforms like Airbnb has significantly transformed the hospitality industry, 
+enabling homeowners to monetize their properties while offering travelers diverse lodging options. Unlike hotels, Airbnb prices
+are highly variable, influenced by factors such as property type, host reputation, and location-specific characteristics [@airbnb_disruptive].
+Understanding the determinants of Airbnb pricing is crucial for both hosts seeking to maximize revenue and travelers 
+looking for cost-effective stays.
+
+Given the dynamic nature of Airbnb pricing, identifying the key factors that influence listing prices has been a focal point 
+of research. Prior studies have investigated how aspects such as property characteristics, location, and host reputation contribute to 
+price variations. However, price determinants may differ across cities due to unique market conditions and demand fluctuations.
+Thus, a more comprehensive analysis is needed to quantify these effects across different urban contexts.
+
+This study aims to analyze the factors that influence Airbnb prices across Berlin, London, and Paris. By leveraging publicly 
+available Airbnb listing data, we examine the role of various attributes, including room type, guest satisfaction ratings, host status,
+and proximity to city landmarks. Previous research has shown that location and property attributes are key drivers of pricing 
+[@airbnb_future], but this study seeks to further quantify their impact using regression-based modeling.
+
+Prior studies have also emphasized the importance of host-related attributes, such as Superhost status and guest review scores,
+in determining Airbnb listing prices [@airbnb_price_determinants]. A highly rated host can often command a higher 
+price due to increased trust and perceived quality from potential guests.
+
+Beyond host characteristics, broader market factors also influence short-term rental pricing. Research suggests that urban tourism
+trends and local demand-supply dynamics play a significant role in price fluctuations, particularly during peak seasons and major
+events, when demand surges and hosts adjust prices accordingly [@airbnb_analysis].
+
+Given these insights, it is evident that Airbnb pricing is influenced by both micro-level attributes (e.g., host reputation and 
+property features) and macro-level market factors (e.g., tourism trends and seasonal demand fluctuations). However, most prior 
+studies have focused on isolated factors, such as host-related attributes or location-based pricing, without integrating multiple
+key determinants into a unified predictive framework.
+
+To address this gap, this study aims to develop a comprehensive pricing prediction model that incorporates both property-specific
+features (e.g., room type, capacity, and cleanliness rating) and external market influences (e.g., demand fluctuations and urban
+attractiveness). By analyzing Airbnb listings across Berlin, London, and Paris, we seek to determine the most significant 
+predictors of price and assess their relative impact.
+
+Thus, our central research question is:
+
+***"What are the most significant factors that influence Airbnb listing prices in Berlin, London, and Paris?"***
+
+By identifying these key pricing determinants, this study aims to provide practical insights for Airbnb hosts optimizing their 
+pricing strategies, travelers making cost-effective booking decisions, and market analysts studying rental price trends.
+
+## Dataset Description
+
+The dataset contains 19,165 listings from Berlin, London, and Paris with variables such as room type, location, guest satisfaction,
+and amenities. Below is a description of the key dataset variables used in the analysis:
+
+| **Variable**                   | **Description**                                                |
+|---------------------------------|---------------------------------------------------------------|
+| `realSum`                       | The price of the listing (target variable).                  |
+| `room_type`                     | Type of accommodation (`Entire home`, `Private room`, `Shared room`). |
+| `person_capacity`               | Maximum occupancy.                                           |
+| `host_is_superhost`             | Whether the host is a superhost (`TRUE/FALSE`).             |
+| `cleanliness_rating`            | Guest cleanliness rating (scale of 1-5).                    |
+| `guest_satisfaction_overall`    | Overall guest rating.                                        |
+| `dist`                          | Distance to the city center (in km).                        |
+| `metro_dist`                    | Distance to the nearest metro station (in km).              |
+| `attr_index`                    | Tourism attractiveness score.                               |
+| `rest_index`                    | Restaurant quality score.                                   |
+| `weekdays`                      | Availability on weekdays (`TRUE` = weekday, `FALSE` = weekend). |
+| `city`                          | The city where the listing is located (`Berlin`, `London`, `Paris`). |
+
+
+
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(ggplot2)
+library(dplyr)
+library(corrplot)
+library(tidyr)
+library(cowplot)
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# Loading the dataset from the webpage
+berlin_weekdays = read.csv("https://zenodo.org/records/4446043/files/berlin_weekdays.csv")
+berlin_weekends = read.csv("https://zenodo.org/records/4446043/files/berlin_weekends.csv")
+london_weekdays = read.csv("https://zenodo.org/records/4446043/files/london_weekdays.csv")
+london_weekends = read.csv("https://zenodo.org/records/4446043/files/london_weekends.csv")
+paris_weekdays = read.csv("https://zenodo.org/records/4446043/files/paris_weekdays.csv")
+paris_weekends = read.csv("https://zenodo.org/records/4446043/files/paris_weekends.csv")
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+#| label: tbl-data1
+#| tbl-cap: First few rows of Airbnb data
+#| fig.margin: 80px
+# Add 'weekdays' and 'city' columns
+berlin_weekdays <- berlin_weekdays %>% mutate(weekdays = TRUE, city = "berlin")
+berlin_weekends <- berlin_weekends %>% mutate(weekdays = FALSE, city = "berlin")
+
+london_weekdays <- london_weekdays %>% mutate(weekdays = TRUE, city = "london")
+london_weekends <- london_weekends %>% mutate(weekdays = FALSE, city = "london")
+
+paris_weekdays <- paris_weekdays %>% mutate(weekdays = TRUE, city = "paris")
+paris_weekends <- paris_weekends %>% mutate(weekdays = FALSE, city = "paris")
+
+# Combine all datasets
+airbnb <- bind_rows(berlin_weekdays, berlin_weekends,
+                    london_weekdays, london_weekends,
+                    paris_weekdays, paris_weekends)
+
+knitr::kable(head(airbnb, 6))
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+#| label: tbl-data2
+#| tbl-cap: Summary of the Airbnb dataset, variable types, sample values, missing data count.
+#| fig.margin: 80px
+# Convert categorical variables to factors
+airbnb$room_type <- as.factor(airbnb$room_type)
+airbnb$host_is_superhost <- as.factor(airbnb$host_is_superhost)
+airbnb$city <- as.factor(airbnb$city)
+airbnb$weekdays <- as.factor(airbnb$weekdays)
+
+# Check structure and missing values
+str(airbnb)
+cat("The number of missing values is:", sum(is.na(airbnb)), "\n")
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+#| label: tbl-data3
+#| tbl-cap: Summary statistics of selected numeric variables.
+#| fig.margin: 80px
+# Summary of the data
+summary(airbnb[, c("realSum", "person_capacity", "bedrooms", "dist", 
+                   "metro_dist", "attr_index", "attr_index_norm", "rest_index", "rest_index_norm")])
+```
+
+### Exploratory Data Analysis
+
+@fig-histograms displays the distribution of key predictor variables in the dataset. These histograms provide insight into how each variable is spread and whether they exhibit skewness. Most variables showing a right-skewed distribution, indicating a concentration of lower values with a few extreme outliers. The distributions of distance-based predictors (dist and metro_dist) suggest that most listings are located closer to central areas, with a gradual decline in frequency as distance increases.
+
+![Distributions of predictor variables used in modeling Airbnb price.](../results/histograms.png){#fig-histograms width=70%}
+
+### Correlation Matrix of Numerical Variables
+
+To examine potential relationships between numerical variables, we computed pairwise Pearson correlation coefficients and visualized them using a heatmap. Darker blue shades indicate strong positive correlations, while darker red shades denote strong negative correlations. We observe that realSum (our target variable) has positive correlations with person_capacity and bedrooms, implying that larger accommodations tend to have higher prices. Conversely, dist and metro_dist exhibit weak or slightly negative correlations with realSum, suggesting that properties farther from city centers may not necessarily be priced higher. 
+
+![Correlation matrix of predictor variables and price, with color indicating the strength and direction of relationships.](../results/correlation_matrix.png){#fig-matrix width=70%}
+
+### Regression Analysis
+
+A multiple linear regression model was fitted to predict Airbnb prices using key listing attributes. @fig-summary summarizes the model coefficients, indicating the effect of each predictor on price.
+
+![Linear regression results for Airbnb price as a function of listing characteristics.](../results/model_summary.txt){#fig-summary width=70%}
+
+@fig-residuals_plot shows the residuals of the model, which appear to be relatively evenly distributed around zero. However, some variance remains unexplained, suggesting that additional factors such as seasonal demand fluctuations or host pricing strategies could be influencing Airbnb prices.
+
+![Residuals plot for the regression model, showing the distribution of errors around zero.](../results/residuals_plot.png){#fig-residuals_plot width=70%}
+
+
+## Discussion
+
+Our analysis of Airbnb listings in Berlin, London, and Paris identified several key factors that influence pricing. We found that the number of bedrooms 
+and guest capacity are among the strongest predictors of price, with larger accommodations commanding higher rates. Additionally, location plays a 
+significant role, as listings near metro stations tend to have higher prices due to increased accessibility. The impact of being a superhost was positive 
+but relatively minor compared to other factors. Surprisingly, while guest satisfaction ratings contribute to pricing, they do not appear to be as influential 
+as property size and location.
+
+## Key Findings
+
+### Strongest Predictors of Price
+
+**Person Capacity (+48.29 per additional person)**: Listings accommodating more guests tend to be more expensive.
+
+**Bedrooms (+143.87 per additional bedroom)**: More bedrooms significantly increase the price.
+
+**Tourism Attraction Index (+8.86 per unit increase)**: Higher attraction index leads to higher prices, confirming that locations with popular tourist attractions are more expensive.
+
+
+### Location-Based Effects
+
+**Distance from the City Center (+9.73 per km)**: Surprisingly, prices increase slightly as the distance from the city center grows. This suggests that some high-end properties exist further from the city core, possibly in suburban or scenic locations.
+
+**Distance from Metro (-19.50 per km)**: Listings farther from metro stations are cheaper, showing that metro accessibility is a key pricing factor.
+
+
+### Effect of Host & Room Type
+
+**Superhost Status (+25.78 for superhosts)**: Superhosts charge slightly higher prices, likely due to better reviews and perceived trustworthiness.
+
+### Room Type
+
+**Private Rooms (-145.59)**: Private rooms are significantly cheaper than entire homes.
+
+**Shared Rooms (-249.30)**: The cheapest option, with prices much lower than entire homes.
+
+### City-Based Price Differences
+
+**Paris (+86.64 compared to Berlin)** and **London(+75.57 compared to Berlin)** are significantly more expensive.
+
+The results confirm that Paris has the highest Airbnb prices, followed by London, while Berlin is the most affordable.
+
+**Weekdays vs. Weekends:**
+
+No significant difference (p = 0.654).
+
+Prices remain stable between weekdays and weekends, indicating consistent demand rather than peak pricing strategies.
+
+
+## Expected vs. Unexpected Results
+### Expected
+> Person capacity, bedrooms, and attraction index significantly influence price, as anticipated.
+
+> Superhosts charge higher prices, likely due to trust and better service.
+
+> Room type heavily affects pricing, with entire homes being the most expensive.
+
+### Unexpected
+> City center distance shows a positive relationship with price (instead of negative). This could mean luxury properties 
+exist in suburban areas, or city centers have budget accommodations.
+
+> Weekday vs. weekend pricing is not significantly different. We expected weekend prices to be slightly higher, but 
+the data suggests a steady demand throughout the week.
+
+## Model Performance & Validity
+### R-Squared
+> The model has R-squared of 0.24(with Adjusted R-squared of 0.2395), meaning that the model explains 24% of Airbnb price variation,
+meaning other factors like seasonal trends, demand fluctuations, or special events might also influence pricing.
+
+### Variance Inflation Factor (VIF) Checks
+> rest_index_norm (GVIF = 5.64) is the highest, meaning it might have moderate collinearity with other features.
+
+> dist (GVIF = 3.64) and city (GVIF = 5.38) are also relatively high.
+
+> While no extreme multicollinearity exists, some correlation between location-related variables could affect estimates.
+
+## Impact & Future Research
+### Business Impact
+Understanding these pricing factors can provide good insights for property owners and hosts looking to optimize their listings:
+
+- Property owners should focus on increasing guest capacity and bedrooms to maximize revenue.
+
+- Listings near metro stations can charge higher prices due to increased accessibility.
+
+- While being a superhost slightly boosts prices, it’s not a major pricing factor.
+
+### Consumer Insights
+These results also provide valuable insights for consumers, helping them make more informed decisions when booking Airbnbs:
+
+- Consumers can use these findings to assess whether a listing's price is reasonable based on key factors like location, room size,
+and amenities, avoiding overpriced listings.
+
+- They may adjust their booking strategies, such as selecting less central locations with good transit access, to get better deals 
+while still maintaining convenience.
+
+### Future Research Directions
+While this analysis provides valuable insights into Airbnb pricing, several areas warrant further investigation to refine and expand upon these findings.
+
+A. **Enhancing Model Performance**  
+
+   * The current model explains only a portion of the variation in listing prices. Future studies could explore more advanced modeling techniques, 
+   such as non-linear regression methods, tree-based models, or ensemble approaches, to improve predictive accuracy.  
+
+   * Incorporating additional features, such as review sentiment scores, booking frequency, or cancellation policies, may also enhance the model’s 
+   ability to capture key pricing drivers.
+
+
+
+B. **Exploring Seasonal and Event-Based Price Variations**  
+
+   * Seasonal trends, such as holiday periods and peak travel seasons, likely influence short-term rental prices. Analyzing how pricing fluctuates 
+   throughout the year could offer a deeper understanding of demand-driven adjustments.  
+
+   * Major events, including conferences, festivals, and sporting events, may create short-term price surges. Examining the extent of these effects
+   across different cities could provide valuable insights for both hosts and policymakers.
+
+
+
+C. **Assessing Neighborhood-Level Demand Patterns**  
+
+   * Price variations are often shaped by local factors, such as proximity to tourist attractions, business districts, or public transportation hubs. 
+   A more granular spatial analysis could help identify high-demand areas and their characteristics.  
+
+   * Studying shifts in neighborhood popularity over time may also reveal emerging trends in the short-term rental market.
+
+
+
+D. **Understanding the Impact of Policy and Economic Conditions**  
+
+   * Government regulations on short-term rentals, such as caps on rental days or stricter licensing requirements, may have significant implications 
+   for pricing and market dynamics. Investigating policy interventions across different regions could shed light on their long-term effects.  
+
+   * Broader economic factors, including inflation rates, tourism activity, and local cost of living, may also play a role in shaping Airbnb pricing 
+   strategies. Future research could examine how these external influences interact with host-driven pricing decisions.
+
+
+
+E. **Comparing Consumer Preferences Across Markets**  
+
+   * Pricing strategies are often influenced by guest expectations and booking behaviors. A deeper analysis of guest reviews, satisfaction ratings, 
+   and preferred amenities across cities may provide insights into how consumer preferences shape listing prices.  
+
+   * Understanding why Paris consistently commands higher prices than Berlin or London could reveal cultural or market-driven differences that extend 
+   beyond property attributes alone.
+
+## References
+
+
