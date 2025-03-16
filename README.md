@@ -28,14 +28,8 @@ The data we used was collected from <https://zenodo.org/records/4446043#.Y9Y9ENJ
    ```sh
    docker run --platform linux/amd64 -it --rm dscidyy/dsci310_project:latest
 3. **Inside the container, start an R session**
-   library(ggplot2)
-   library(dplyr)
-   library(car)
-   library(corrplot)
-   library(tidyverse)
-   library(cowplot)
-   library(docopt)
-   library(caret）
+   ```sh
+   system("make all")
 
 
 
