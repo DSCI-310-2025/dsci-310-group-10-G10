@@ -1,7 +1,2 @@
 format: jb-book
-root: index
-chapters:
-  - file: content/introduction
-  - file: content/data
-  - file: content/methods
-  - file: content/results
+root: Airbnb_Pricing_Analysis_Milestone_1

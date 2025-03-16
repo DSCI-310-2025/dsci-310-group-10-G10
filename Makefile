@@ -65,7 +65,16 @@ setup_report:
 	bash $(SETUP_REPORT_SCRIPT)
 
 # Step 8: Build HTML report and copy to docs folder
-$(REPORT_BUILD): setup_report report/index.md report/_toc.yml report/_config.yml
+report/_build/html/index.html: report/Airbnb_Pricing_Analysis_Milestone_1.qmd \
+report/references.bib \
+report/_toc.yml \
+report/_config.yml \
+results/correlation_matrix.png \
+results/histograms.png \
+results/model_summary.txt \
+results/residuals_plot.png \
+model/model.rds \
+model/model_metrics.csv
 	jupyter-book build report
 	mkdir -p docs
 	cp -r report/_build/html/* docs
