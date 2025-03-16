@@ -18,6 +18,6 @@ RUN Rscript -e "remotes::install_version('ggplot2', version = '3.5.1', repos='ht
 
 
 # Setting the default command when the container starts
-CMD ["/init"]
+CMD ["R"]
 
 
