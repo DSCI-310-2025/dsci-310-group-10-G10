@@ -49,6 +49,8 @@ R packages:
 - `corrplot`
 - `tidyr`
 - `cowplot`
+- `docopt`
+- `caret`
 
 ## Licenses
 
