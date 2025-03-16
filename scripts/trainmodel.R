@@ -7,6 +7,10 @@ library(docopt)
 'Usage: trainmodel.R --train_path=<train> --preprocessor_path=<preprocessor> --model_path=<model> --metrics_path=<metrics>' -> doc
 args <- docopt(doc)
 
+# Ensure necessary directories exist
+dir.create(dirname(args$model_path), recursive = TRUE, showWarnings = FALSE)
+dir.create(dirname(args$metrics_path), recursive = TRUE, showWarnings = FALSE)
+
 # Load train data
 train_data <- read_csv(args$train_path, show_col_types = FALSE)
 
@@ -32,4 +36,4 @@ r2 <- cor(predictions, train_data$realSum)^2
 metrics <- tibble(RMSE = rmse, MAE = mae, R2 = r2)
 write_csv(metrics, args$metrics_path)
 
-print("Model training completed. Model and metrics saved.")
+print("✅ Model training completed. Model and metrics saved.")
