@@ -7,6 +7,11 @@ library(docopt)
 'Usage: preprocessdata.R --input_path=<input> --train_path=<train> --test_path=<test> --preprocessor_path=<preprocessor>' -> doc
 args <- docopt(doc)
 
+# Ensure necessary directories exist
+dir.create(dirname(args$train_path), recursive = TRUE, showWarnings = FALSE)
+dir.create(dirname(args$test_path), recursive = TRUE, showWarnings = FALSE)
+dir.create(dirname(args$preprocessor_path), recursive = TRUE, showWarnings = FALSE)
+
 # Load cleaned data
 airbnb <- read_csv(args$input_path, show_col_types = FALSE)
 
@@ -24,4 +29,4 @@ write_csv(test_data, args$test_path)
 preprocessor <- list(scaling = FALSE, encoding = FALSE)  # Placeholder for transformations
 saveRDS(preprocessor, args$preprocessor_path)
 
-print("Preprocessing completed. Train and test data saved.")
+print("✅ Preprocessing completed. Train and test data saved.")
