@@ -23,8 +23,10 @@ jobs:
           install.packages("dplyr")
           install.packages("purrr")
           install.packages("cowplot")
+        shell: Rscript {0}
 
       - name: Run testthat tests
         run: |
           testthat::test_dir("test/testthat")
         shell: Rscript {0}
+
