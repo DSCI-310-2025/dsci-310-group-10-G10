@@ -1,5 +1,5 @@
 library(testthat)
-source("src/convert_columns_to_factor.R")
+source("R/convert_columns_to_factor.R")
 
 test_that("convert_columns_to_factor converts specified columns to factor", {
   df <- data.frame(
