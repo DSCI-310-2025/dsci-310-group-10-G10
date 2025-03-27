@@ -1,5 +1,5 @@
 library(testthat)
-source("src/create_histogram_grid.R")
+source("R/create_histogram_grid.R")
 
 test_that("create_histogram_grid creates a plot file", {
   # Create temporary file path
