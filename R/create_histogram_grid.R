@@ -25,4 +25,3 @@ create_histogram_grid <- function(df, vars, output_path) {
   ggsave(filename = output_path,
          plot = combined_plot, width = 15, height = 20)
 }
-

@@ -15,4 +15,3 @@ convert_columns_to_factor <- function(df) {
       weekdays = as.factor(weekdays)
     )
 }
-
