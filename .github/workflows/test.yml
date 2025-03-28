@@ -11,6 +11,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Set up job
+        run: echo "Starting R test job..."
+
       - name: Checkout repo
         uses: actions/checkout@v3
 
@@ -19,16 +22,8 @@ jobs:
 
       - name: Install required packages
         run: |
-          install.packages("testthat")
-          install.packages("ggplot2")
-          install.packages("cowplot")
-          install.packages("purrr")
-          install.packages("dplyr")
+          Rscript -e 'install.packages(c("testthat", "dplyr", "ggplot2", "cowplot", "purrr"))'
 
       - name: Source R scripts and run tests
         run: |
-          R_files <- list.files("R", full.names = TRUE)
-          sapply(R_files, source)
-          testthat::test_dir("test/testthat")
-
-
+          Rscript -e 'testthat::test_dir("test/testthat")'
