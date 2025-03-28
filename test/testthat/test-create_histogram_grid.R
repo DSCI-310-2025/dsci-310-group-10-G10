@@ -1,7 +1,7 @@
 library(testthat)
-source("R/create_histogram_grid.R")
 
 test_that("create_histogram_grid creates a plot file", {
+  source("R/create_histogram_grid.R")
   # Create temporary file path
   tmp_file <- tempfile(fileext = ".png")
 
