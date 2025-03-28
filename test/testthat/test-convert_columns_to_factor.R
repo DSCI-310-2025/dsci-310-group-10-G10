@@ -1,7 +1,7 @@
 library(testthat)
 
 test_that("convert_columns_to_factor converts specified columns to factor", {
-  source("R/convert_columns_to_factor.R")
+  source(file.path("R", "convert_columns_to_factor.R"))
   df <- data.frame(
     room_type = c("Private", "Shared"),
     host_is_superhost = c("Yes", "No"),
