@@ -25,5 +25,6 @@ jobs:
           Rscript -e 'install.packages(c("testthat", "dplyr", "ggplot2", "cowplot", "purrr"))'
 
       - name: Source R scripts and run tests
+        working-directory: ${{ github.workspace }}
         run: |
           Rscript -e 'testthat::test_dir("test/testthat")'
