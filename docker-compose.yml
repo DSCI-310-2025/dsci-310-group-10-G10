@@ -7,12 +7,12 @@ services:
     volumes:
       - "./docs:/home/rstudio/docs"
       - "./data:/home/rstudio/data"
-      - "./model:/home/rstudio/model"
       - "./report:/home/rstudio/report"
       - "./results:/home/rstudio/results"
       - "./scripts:/home/rstudio/scripts"
       - "./Makefile:/home/rstudio/Makefile"
       - "./Milestone_1_Data_Analysis:/home/rstudio/Milestone_1_Data_Analysis"
+      - "./test:/home/rstudio/test"
     environment:
       DISABLE_AUTH: true  
     working_dir: /home/rstudio
