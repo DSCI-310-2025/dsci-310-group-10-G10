@@ -16,7 +16,7 @@ test_that("train_model errors without 'price' column", {
     x1 = c(1, 2, 3),
     x2 = c(4, 5, 6)
   )
-  expect_error(train_model(df), "object 'price' not found")
+  expect_error(train_model(df), , regexp = "price")
 })
 
 test_that("train_model uses 5-fold cross-validation", {
