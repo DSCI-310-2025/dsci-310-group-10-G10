@@ -1,6 +1,6 @@
 library(tidyverse)
 library(docopt)
-source("../R/download_combine_data.R") 
+source("R/download_combine_data.R") 
 
 # Define command-line arguments
 'Usage: downloaddata.R --output_path=<output>' -> doc
