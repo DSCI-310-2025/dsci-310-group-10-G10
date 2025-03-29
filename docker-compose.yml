@@ -13,6 +13,7 @@ services:
       - "./Makefile:/home/rstudio/Makefile"
       - "./Milestone_1_Data_Analysis:/home/rstudio/Milestone_1_Data_Analysis"
       - "./test:/home/rstudio/test"
+      - "./R:/home/rstudio/R"
     environment:
       DISABLE_AUTH: true  
     working_dir: /home/rstudio
