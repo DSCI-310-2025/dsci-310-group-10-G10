@@ -13,4 +13,5 @@ dependencies:
   - r-cowplot=1.1.1
   - r-caret=6.0-94
   - r-docopt=0.7.1
+  - r-testthat
   - jupyter-book
