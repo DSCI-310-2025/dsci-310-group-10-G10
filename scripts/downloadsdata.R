@@ -1,5 +1,6 @@
 library(tidyverse)
 library(docopt)
+source("R/download_combine_data.R") 
 
 # Define command-line arguments
 'Usage: downloaddata.R --output_path=<output>' -> doc
@@ -19,15 +20,7 @@ urls <- list(
 )
 
 # Download and combine all data
-airbnb_list <- map2(urls, names(urls), function(url, name) {
-  df <- read_csv(url, show_col_types = FALSE)
-  df <- df %>% mutate(
-    weekdays = grepl("weekdays", name),
-    city = word(name, 1, sep = "_")
-  )
-})
-
-airbnb_combined <- bind_rows(airbnb_list)
+airbnb_combined <- download_combine_data(urls)
 
 # Save as a single CSV
 write_csv(airbnb_combined, args$output_path)

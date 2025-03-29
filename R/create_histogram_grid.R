@@ -15,9 +15,11 @@ create_histogram_grid <- function(df, vars, output_path) {
   library(purrr)
 
   plot_list <- map(vars, function(var) {
-    ggplot(df, aes_string(x = var)) +
-      geom_histogram(binwidth = 50, fill = "blue", color = "black") +
-      labs(title = paste("Histogram of", var))
+    ggplot(df, aes(x = !!sym(var))) +
+      geom_histogram(bins = 50, fill = "blue", color = "black") +
+      ggtitle(paste("Distribution of", var)) +
+      xlab(var) + ylab("Count") +
+      theme_minimal()
   })
 
   combined_plot <- cowplot::plot_grid(plotlist = plot_list, ncol = 2)
