@@ -7,11 +7,22 @@
 #' @return A data frame with the specified columns converted to factors
 #' @export
 convert_columns_to_factor <- function(df) {
-  df %>%
-    dplyr::mutate(
-      room_type = as.factor(room_type),
-      host_is_superhost = as.factor(host_is_superhost),
-      city = as.factor(city),
-      weekdays = as.factor(weekdays)
-    )
+
+  cols_to_convert <- c("room_type", "host_is_superhost", "city", "weekdays")
+  
+  # Only attempt to convert columns that exist in the data
+  existing_cols <- cols_to_convert[cols_to_convert %in% colnames(df)]
+  
+  # Check if any columns are not character, factor, or logical 
+  for (col in existing_cols) {
+    if (!is.character(df[[col]]) && !is.factor(df[[col]]) && !is.logical(df[[col]])) {
+      stop(paste("Column", col, "must be a character, factor, or logical"))
+    }
+  }
+
+  # Convert columns to factor
+  df <- df %>%
+    dplyr::mutate(across(all_of(existing_cols), ~ as.factor(.)))
+  
+  return(df)
 }
