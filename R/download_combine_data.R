@@ -6,7 +6,9 @@
 #' @return A combined data frame with an added city and weekdays column.
 #' @export
 download_combine_data <- function(urls) {
-  library(tidyverse)
+  library(dplyr)
+  library(purrr)
+  library(readr)
   
   airbnb_list <- map2(urls, names(urls), function(url, name) {
     df <- read_csv(url, show_col_types = FALSE) %>%
