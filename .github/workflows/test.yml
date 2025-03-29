@@ -25,7 +25,7 @@ jobs:
 
       - name: Install required packages
         run: |
-          Rscript -e 'install.packages(c("testthat", "readr", "dplyr", "ggplot2", "cowplot", "purrr"))'
+          Rscript -e 'install.packages(c("testthat", "tidyverse", "dplyr", "ggplot2", "cowplot", "purrr"))'
 
       - name: Source R scripts and run tests
         run: |
