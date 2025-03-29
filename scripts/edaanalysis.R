@@ -3,7 +3,7 @@ library(docopt)
 library(ggplot2)
 library(cowplot)
 library(corrplot)
-
+source("R/create_histogram_grid.R")
 # Define command-line arguments
 'Usage: edaanalysis.R --input_path=<input> --output_dir=<output>' -> doc
 args <- docopt(doc)
@@ -28,19 +28,8 @@ numeric_vars <- c("realSum", "person_capacity", "bedrooms", "dist",
                   "rest_index", "rest_index_norm")
 
 # Create and save histograms
-plot_list <- map(numeric_vars, function(var) {
-  ggplot(airbnb, aes(x = !!sym(var))) +
-    geom_histogram(bins = 50, fill = "blue", color = "black") +
-    ggtitle(paste("Distribution of", var)) +
-    xlab(var) + ylab("Count") +
-    theme_minimal()
-})
-
-# Assign plot to an object
-combined_plot <- cowplot::plot_grid(plotlist = plot_list, ncol = 2)
-
-# Save the plot explicitly
-ggsave(filename = file.path(args$output_dir, "histograms.png"), plot = combined_plot, width = 15, height = 20)
+output_histograms_path <- file.path(args$output_dir, "histograms.png")
+create_histogram_grid(airbnb, vars = numeric_vars, output_path = output_histograms_path)
 
 
 # Compute and save correlation matrix
