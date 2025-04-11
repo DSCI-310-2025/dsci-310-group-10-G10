@@ -1,4 +1,7 @@
 library(dplyr)
+library(ggplot2)
+library(corrplot)
+
 
 check_empty_rows <- function(data) {
   empty_rows <- data %>% filter(if_all(everything(), ~ is.na(.) | . == ""))
@@ -48,4 +51,31 @@ check_category_levels <- function(data, column, expected_levels) {
   actual_levels <- unique(data[[column]])
   unexpected <- setdiff(actual_levels, expected_levels)
   return(unexpected)
+}
+
+check_target_distribution <- function(data, target_var, output_dir) {
+  target_values <- data[[target_var]]
+  summary_stats <- summary(target_values)
+
+  
+  write.table(summary_stats,
+              file = file.path(output_dir, "validation_issues", "target_summary.txt"),
+              col.names = FALSE)
+
+  png(filename = file.path(output_dir, "validation_issues", "target_histogram.png"),
+      width = 800, height = 600)
+  ggplot(data, aes(x = .data[[target_var]])) +
+    geom_histogram(bins = 50, fill = "skyblue", color = "black") +
+    labs(title = paste("Distribution of", target_var), x = target_var, y = "Count")
+  dev.off()
+}
+
+check_feature_correlations <- function(data, features, target_var, output_dir) {
+  numeric_data <- data[, c(features, target_var)]
+  cor_matrix <- cor(numeric_data, use = "complete.obs")
+
+  png(filename = file.path(output_dir, "validation_issues", "feature_correlation.png"),
+      width = 800, height = 800)
+  corrplot::corrplot(cor_matrix, method = "color", tl.col = "black", tl.srt = 45)
+  dev.off()
 }
