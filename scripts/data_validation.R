@@ -12,6 +12,7 @@ args <- docopt(doc)
 dir.create(file.path(args$output_dir, "validation_issues"), recursive = TRUE, showWarnings = FALSE)
 
 data <- read_csv(args$input_path, show_col_types = FALSE)
+print(unique(data$room_type))
 
 empty_rows <- check_empty_rows(data)
 missing_cols <- check_missing_threshold(data, threshold = 0.1)
