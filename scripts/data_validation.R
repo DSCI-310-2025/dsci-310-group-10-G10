@@ -34,10 +34,6 @@ if (length(missing_cols) > 0) {
   summary_lines <- c(summary_lines, "✅ No columns exceed 10% missing values.")
 }
 
-write_lines(summary_lines, summary_path)
-
-cat(paste(summary_lines, collapse = "\n"))
-
 expected_types <- c(
   realSum = "numeric",
   city = "character",
@@ -104,9 +100,8 @@ numeric_features <- c("person_capacity", "bedrooms", "dist", "metro_dist",
 
 check_feature_correlations(data, features = numeric_features,
                            target_var = "realSum", output_dir = args$output_dir)
-
 summary_lines <- c(summary_lines, "📊 Feature-target correlations plot saved.")
 
+# ✅ Final write and print
 write_lines(summary_lines, summary_path)
 cat(paste(summary_lines, collapse = "\n"))
-
