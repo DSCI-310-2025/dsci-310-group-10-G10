@@ -64,3 +64,35 @@ if (nrow(duplicates) > 0) {
 } else {
   summary_lines <- c(summary_lines, "✅ No duplicate rows found.")
 }
+
+# Check 5: Outlier detection for numeric columns
+numeric_cols <- c("realSum", "person_capacity", "bedrooms", "dist",
+                  "metro_dist", "attr_index", "attr_index_norm",
+                  "rest_index", "rest_index_norm")
+
+outliers_list <- check_outliers(data, numeric_cols)
+
+if (length(outliers_list) > 0) {
+  for (col in names(outliers_list)) {
+    write_csv(outliers_list[[col]],
+              file.path(args$output_dir, "validation_issues", paste0("outliers_", col, ".csv")))
+  }
+  summary_lines <- c(summary_lines, paste("⚠️ Outliers detected in columns:", paste(names(outliers_list), collapse = ", ")))
+} else {
+  summary_lines <- c(summary_lines, "✅ No outliers detected in numeric columns.")
+}
+
+# Check 6: Category level mismatch
+expected_room_types <- c("Private room", "Entire home/apt", "Shared room")
+unexpected_levels <- check_category_levels(data, "room_type", expected_room_types)
+
+if (length(unexpected_levels) > 0) {
+  write_csv(as.data.frame(unexpected_levels),
+            file.path(args$output_dir, "validation_issues", "unexpected_room_types.csv"))
+  summary_lines <- c(summary_lines, paste("⚠️ Unexpected room_type values found:", paste(unexpected_levels, collapse = ", ")))
+} else {
+  summary_lines <- c(summary_lines, "✅ All room_type values match expectations.")
+}
+
+write_lines(summary_lines, summary_path)
+cat(paste(summary_lines, collapse = "\n"))
