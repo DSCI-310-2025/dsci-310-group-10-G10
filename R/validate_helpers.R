@@ -23,3 +23,29 @@ check_duplicates <- function(data) {
   duplicate_rows <- data[duplicated(data), ]
   return(duplicate_rows)
 }
+
+check_outliers <- function(data, numeric_cols) {
+  outliers_list <- list()
+
+  for (col in numeric_cols) {
+    values <- data[[col]]
+    q1 <- quantile(values, 0.25, na.rm = TRUE)
+    q3 <- quantile(values, 0.75, na.rm = TRUE)
+    iqr <- q3 - q1
+    lower <- q1 - 1.5 * iqr
+    upper <- q3 + 1.5 * iqr
+    outliers <- data %>% filter(!is.na(.data[[col]]) & (.data[[col]] < lower | .data[[col]] > upper))
+    
+    if (nrow(outliers) > 0) {
+      outliers_list[[col]] <- outliers
+    }
+  }
+
+  return(outliers_list)
+}
+
+check_category_levels <- function(data, column, expected_levels) {
+  actual_levels <- unique(data[[column]])
+  unexpected <- setdiff(actual_levels, expected_levels)
+  return(unexpected)
+}
