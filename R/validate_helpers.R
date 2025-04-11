@@ -10,3 +10,16 @@ check_missing_threshold <- function(data, threshold = 0.1) {
   exceeded <- col_missing[col_missing > threshold]
   return(exceeded)
 }
+
+
+check_column_types <- function(data, expected_types) {
+  actual_types <- sapply(data, class)
+  mismatches <- actual_types[names(expected_types)] != expected_types
+  return(expected_types[mismatches])
+}
+
+
+check_duplicates <- function(data) {
+  duplicate_rows <- data[duplicated(data), ]
+  return(duplicate_rows)
+}
