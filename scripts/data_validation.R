@@ -37,3 +37,29 @@ write_lines(summary_lines, summary_path)
 
 cat(paste(summary_lines, collapse = "\n"))
 
+expected_types <- c(
+  realSum = "numeric",
+  city = "character",
+  person_capacity = "numeric",
+  bedrooms = "numeric"
+)
+
+type_mismatches <- check_column_types(data, expected_types)
+
+if (length(type_mismatches) > 0) {
+  type_df <- data.frame(Column = names(type_mismatches), Expected = type_mismatches)
+  write_csv(type_df, file.path(args$output_dir, "validation_issues", "column_type_mismatches.csv"))
+  summary_lines <- c(summary_lines, paste("⚠️ Column types do not match expected:", paste(names(type_mismatches), collapse = ", ")))
+} else {
+  summary_lines <- c(summary_lines, "✅ All column types match expectations.")
+}
+
+# Check 4: Duplicate row check
+duplicates <- check_duplicates(data)
+
+if (nrow(duplicates) > 0) {
+  write_csv(duplicates, file.path(args$output_dir, "validation_issues", "duplicated_rows.csv"))
+  summary_lines <- c(summary_lines, paste("⚠️ Found", nrow(duplicates), "duplicate rows."))
+} else {
+  summary_lines <- c(summary_lines, "✅ No duplicate rows found.")
+}
