@@ -94,5 +94,19 @@ if (length(unexpected_levels) > 0) {
   summary_lines <- c(summary_lines, "✅ All room_type values match expectations.")
 }
 
+# Check 7: Target variable distribution
+check_target_distribution(data, target_var = "realSum", output_dir = args$output_dir)
+summary_lines <- c(summary_lines, "📊 Target variable distribution saved as histogram and summary.")
+
+# Check 8: Correlation between features and target
+numeric_features <- c("person_capacity", "bedrooms", "dist", "metro_dist",
+                      "attr_index", "attr_index_norm", "rest_index", "rest_index_norm")
+
+check_feature_correlations(data, features = numeric_features,
+                           target_var = "realSum", output_dir = args$output_dir)
+
+summary_lines <- c(summary_lines, "📊 Feature-target correlations plot saved.")
+
 write_lines(summary_lines, summary_path)
 cat(paste(summary_lines, collapse = "\n"))
+
