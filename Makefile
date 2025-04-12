@@ -62,6 +62,7 @@ $(REPORT_HTML): $(QMD_FILE) $(EDA_PLOTS) results/model_summary.txt results/resid
 $(DOCS_INDEX): $(REPORT_HTML)
 	mkdir -p docs
 	cp $(REPORT_HTML) $(DOCS_INDEX)
+	cp -r results docs/results
 
 # 清理临时文件
 clean:
