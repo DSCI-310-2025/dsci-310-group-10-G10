@@ -1,6 +1,7 @@
 services:
   rstudio:
     image: dscidyy/dsci310_project:latest  
+    platform: linux/amd64
     container_name: dsci310_rstudio
     ports:
       - "8888:8787"  
