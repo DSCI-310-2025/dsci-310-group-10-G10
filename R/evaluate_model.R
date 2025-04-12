@@ -8,6 +8,17 @@
 #'
 #' @return A tibble with RMSE, MAE, and R-squared values
 #' @export
+#'
+#' @examples
+#' # Example with a simple linear model
+#' df <- data.frame(
+#'   x = 1:10,
+#'   y = 2 * (1:10) + rnorm(10)
+#' )
+#' model <- lm(y ~ x, data = df)
+#' result <- evaluate_model(model, df, response_col = "y")
+#' print(result)
+
 evaluate_model <- function(model, data, response_col) {
   predictions <- predict(model, newdata = data)
   actual <- data[[response_col]]
