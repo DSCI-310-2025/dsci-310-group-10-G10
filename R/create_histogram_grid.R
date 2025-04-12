@@ -9,6 +9,17 @@
 #'
 #' @return NULL (saves the plot to file)
 #' @export
+#'
+#' @examples
+#' df <- data.frame(
+#'   price = c(100, 150, 200, 250),
+#'   size = c(20, 25, 30, 35),
+#'   rating = c(4.5, 4.0, 5.0, 3.5)
+#' )
+#' out_path <- tempfile(fileext = ".png")
+#' create_histogram_grid(df, vars = c("price", "size", "rating"), output_path = out_path)
+#' file.exists(out_path)  # should return TRUE
+
 create_histogram_grid <- function(df, vars, output_path) {
   library(ggplot2)
   library(cowplot)
