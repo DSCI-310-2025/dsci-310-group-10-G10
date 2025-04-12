@@ -1,0 +1,26 @@
+project:
+  type: website
+  output-dir: ../docs
+  render:
+    - Airbnb_Pricing_Analysis_Milestone_1.qmd # 只渲染这个文件
+
+title: "Airbnb Pricing Analysis"
+author: "Group 10"
+
+format:
+  html:
+    toc: true
+    number-sections: true
+    code-fold: true
+    code-summary: "Show code"
+    smooth-scroll: true
+
+website:
+  navbar:
+    left:
+      - text: "Report"
+        href: Airbnb_Pricing_Analysis_Milestone_1.qmd # 指向报告作为网站首页
+
+execute:
+  echo: true
+  warning: false
