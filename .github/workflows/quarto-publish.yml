@@ -17,8 +17,12 @@ jobs:
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
 
-      - name: Install Pandoc (for ipynb/qmd support)
+      - name: Install Pandoc
         uses: r-lib/actions/setup-pandoc@v1
+
+      - name: Install R packages
+        run: |
+          Rscript -e 'install.packages(c("rmarkdown", "knitr"), repos="https://cloud.r-project.org")'
 
       - name: Render site
         run: quarto render Milestone_1_Data_Analysis --output-dir docs
