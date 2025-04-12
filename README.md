@@ -40,6 +40,59 @@ The data we used was collected from <https://zenodo.org/records/4446043#.Y9Y9ENJ
    system("make all") #to run analysis from start
    system("make clean") #to delete what analysis generated
 
+## Project Structure and Functionality
+
+This project is organized into modular R scripts, each responsible for a specific step in the Airbnb price analysis pipeline.
+
+### Script Overview
+
+| Script | Description |
+|--------|-------------|
+| `downloadsdata.R` | Downloads raw Airbnb datasets from provided URLs and combines them into a single data frame. |
+| `cleandata.R` | Cleans and formats the combined dataset, handling missing values and renaming variables. |
+| `data_validation.R` | Validates the cleaned data by checking for missing values, outliers, type mismatches, and unusual categorical levels. |
+| `edaanalysis.R` | Performs exploratory data analysis and generates summary statistics, histograms, and correlation plots. |
+| `preprocessdata.R` | Applies preprocessing transformations such as converting categorical variables to factors. |
+| `modelanalysis.R` | Trains and evaluates a regression model using cross-validation and outputs performance metrics. |
+| `trainmodel.R` | Fits a regression model using the caret package. Used internally within `modelanalysis.R`. |
+
+---
+
+### Recommended Manual Workflow
+
+To reproduce the analysis manually without Docker, run the following scripts in order:
+
+```bash
+# 1. Download and combine datasets
+Rscript scripts/downloadsdata.R --output_path=data/raw_combined.csv
+
+# 2. Clean the data
+Rscript scripts/cleandata.R --input_path=data/raw_combined.csv --output_path=data/cleaned_airbnb.csv
+
+# 3. Validate the cleaned data
+Rscript scripts/data_validation.R --input_path=data/cleaned_airbnb.csv --output_dir=results/
+
+# 4. Perform EDA
+Rscript scripts/edaanalysis.R --input_path=data/cleaned_airbnb.csv --output_dir=results/
+
+# 5. Train and evaluate model
+Rscript scripts/modelanalysis.R --input_path=data/cleaned_airbnb.csv --output_dir=results/
+
+### Expected Outputs
+
+All results and diagnostics are saved to the `results/` directory. These include:
+
+- `validation_summary.txt`: Summary of data quality checks
+- `target_histogram.png`, `feature_correlation.png`: Visualizations of target variable and feature correlations
+- Validation issue files:
+  - `high_missing_columns.csv`
+  - `duplicated_rows.csv`
+  - `outliers_<column>.csv`
+  - `column_type_mismatches.csv`
+  - `unexpected_room_types.csv`
+- `model_summary.txt`: RMSE, MAE, R-squared values for model evaluation
+
+
 ## List of dependencies needed to run analysis
 
 R packages:
