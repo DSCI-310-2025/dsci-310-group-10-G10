@@ -1,0 +1,30 @@
+
+Call:
+lm(formula = .outcome ~ ., data = dat)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-1109.2  -101.0   -24.2    49.2 16093.7 
+
+Coefficients:
+                         Estimate Std. Error t value Pr(>|t|)    
+(Intercept)             -158.0479    21.5637  -7.329 2.43e-13 ***
+person_capacity           45.4150     3.1805  14.279  < 2e-16 ***
+bedrooms                 148.7683     5.8854  25.278  < 2e-16 ***
+dist                      10.2577     2.0240   5.068 4.07e-07 ***
+metro_dist               -18.9104     3.7934  -4.985 6.26e-07 ***
+attr_index_norm            9.4228     0.4684  20.115  < 2e-16 ***
+host_is_superhostTRUE     27.5257     7.9697   3.454 0.000554 ***
+`room_typePrivate room` -148.6060     7.1519 -20.778  < 2e-16 ***
+`room_typeShared room`  -249.4847    27.1662  -9.184  < 2e-16 ***
+weekdaysTRUE               4.5875     5.9810   0.767 0.443089    
+citylondon                67.4131    12.2648   5.496 3.94e-08 ***
+cityparis                 90.7116    10.8809   8.337  < 2e-16 ***
+rest_index_norm            0.3256     0.3645   0.894 0.371601    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 361.1 on 15320 degrees of freedom
+Multiple R-squared:  0.2332,	Adjusted R-squared:  0.2326 
+F-statistic: 388.3 on 12 and 15320 DF,  p-value: < 2.2e-16
+
