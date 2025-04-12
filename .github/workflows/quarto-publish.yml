@@ -22,16 +22,19 @@ jobs:
 
       - name: Install R packages
         run: |
-          run: |
-            Rscript -e 'install.packages(c(
-              "rmarkdown", 
-              "knitr", 
-              "ggplot2", 
-              "dplyr", 
-              "readr", 
-              "tidyr", 
-              "broom"
-            ), repos="https://cloud.r-project.org")'
+          Rscript -e 'install.packages(c(
+            "rmarkdown", 
+            "knitr", 
+            "ggplot2", 
+            "dplyr", 
+            "readr", 
+            "tidyr", 
+            "broom",
+            "car",
+            "corrplot",
+            "cowplot",
+            "caret"
+          ), repos = "https://cloud.r-project.org")'
 
       - name: Render site
         run: quarto render Milestone_1_Data_Analysis --output-dir docs
