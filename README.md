@@ -77,6 +77,7 @@ Rscript scripts/edaanalysis.R --input_path=data/cleaned_airbnb.csv --output_dir=
 
 # 5. Train and evaluate model
 Rscript scripts/modelanalysis.R --input_path=data/cleaned_airbnb.csv --output_dir=results/
+```
 
 ### Expected Outputs
 
