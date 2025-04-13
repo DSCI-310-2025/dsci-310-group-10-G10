@@ -42,6 +42,20 @@ Location: `README.md`
 
 ---
 
+
+## Feedback 4: Mac compatibility
+
+> Came up as an issue a multiple times
+
+**Our Response:**
+We revised the `docker-compose.yml` to:
+- specify a platform
+- should resolve platform discrepancies but no MAC to test with
+
+Location: `docker-compose.yml`
+
+---
+
 ## ✅ Summary
 
 All peer feedback has now been addressed. We improved our test coverage, documentation, and project clarity, ensuring our pipeline is reproducible and understandable to others.
