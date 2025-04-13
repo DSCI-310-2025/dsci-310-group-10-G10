@@ -42,21 +42,8 @@ The data we used was collected from <https://zenodo.org/records/4446043#.Y9Y9ENJ
 
 ## Project Structure and Functionality
 
-This project is organized into modular R scripts, each responsible for a specific step in the Airbnb price analysis pipeline.
+This project is organized such that functions are located in the source package [airbnbtools](https://github.com/DSCI-310-2025/airbnbtools), each script is responsible for a specific step in the Airbnb price analysis pipeline.
 
-### Script Overview
-
-| Script | Description |
-|--------|-------------|
-| `downloadsdata.R` | Downloads raw Airbnb datasets from provided URLs and combines them into a single data frame. |
-| `cleandata.R` | Cleans and formats the combined dataset, handling missing values and renaming variables. |
-| `data_validation.R` | Validates the cleaned data by checking for missing values, outliers, type mismatches, and unusual categorical levels. |
-| `edaanalysis.R` | Performs exploratory data analysis and generates summary statistics, histograms, and correlation plots. |
-| `preprocessdata.R` | Applies preprocessing transformations such as converting categorical variables to factors. |
-| `modelanalysis.R` | Trains and evaluates a regression model using cross-validation and outputs performance metrics. |
-| `trainmodel.R` | Fits a regression model using the caret package. Used internally within `modelanalysis.R`. |
-
----
 
 ### Recommended Manual Workflow
 
