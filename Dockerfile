@@ -17,7 +17,7 @@ RUN Rscript -e "remotes::install_version('ggplot2', version = '3.5.1', repos='ht
     Rscript -e "remotes::install_version('docopt', version = '0.7.1', repos='http://cran.us.r-project.org')"
 
 # Install airbnbtools package from GitHub (main branch)
-RUN Rscript -e "devtools::install_github('DSCI-310-2025/airbnbtools@main')"
+RUN Rscript -e "devtools::install_github('DSCI-310-2025/airbnbtools@1.0.0')"
 
 # Setting the default command when the container starts
 CMD ["/init"]
