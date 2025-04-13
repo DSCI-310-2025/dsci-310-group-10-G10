@@ -1,6 +1,6 @@
 library(tidyverse)
 library(docopt)
-source("R/convert_columns_to_factor.R")
+library(airbnbtools)
 
 # Define command-line arguments
 'Usage: cleandata.R --input_path=<input> --output_path=<output>' -> doc

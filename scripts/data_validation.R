@@ -1,6 +1,6 @@
 library(tidyverse)
 library(docopt)
-source("R/validate_helpers.R")
+library(airbnbtools)
 
 doc <- "
 Usage:

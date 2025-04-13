@@ -3,7 +3,7 @@ library(docopt)
 library(ggplot2)
 library(cowplot)
 library(corrplot)
-source("R/create_histogram_grid.R")
+library(airbnbtools)
 # Define command-line arguments
 'Usage: edaanalysis.R --input_path=<input> --output_dir=<output>' -> doc
 args <- docopt(doc)
